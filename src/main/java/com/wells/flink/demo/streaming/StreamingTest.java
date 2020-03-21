@@ -25,6 +25,7 @@ public class StreamingTest {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         DataStreamSource<String> source = env.socketTextStream(host, port);
         SingleOutputStreamOperator<Tuple2<String, Integer>> counts = source.flatMap(new FlatMapFunction<String, Tuple2<String, Integer>>() {
+            @Override
             public void flatMap(String line, Collector<Tuple2<String, Integer>> collector) throws Exception {
                 String[] words = line.split(" ");
                 for (String word : words) {
