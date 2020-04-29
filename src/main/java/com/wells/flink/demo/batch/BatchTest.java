@@ -20,16 +20,17 @@ public class BatchTest {
 
         String filePath = args[0];
 
-        ExecutionEnvironment env = ExecutionEnvironment.createCollectionsEnvironment();
-        AggregateOperator<Tuple2<String, Integer>> counts = env.readTextFile(filePath).flatMap(new FlatMapFunction<String, Tuple2<String, Integer>>() {
-            @Override
-            public void flatMap(String line, Collector<Tuple2<String, Integer>> collector) throws Exception {
-                String[] words = line.split(" ");
-                for (String word : words) {
-                    collector.collect(new Tuple2<String, Integer>(word, 1));
-                }
-            }
-        }).groupBy(0).sum(1);
+        ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+        AggregateOperator<Tuple2<String, Integer>> counts = env.readTextFile(filePath)
+                .flatMap(new FlatMapFunction<String, Tuple2<String, Integer>>() {
+                    @Override
+                    public void flatMap(String line, Collector<Tuple2<String, Integer>> collector) throws Exception {
+                        String[] words = line.split(" ");
+                        for (String word : words) {
+                            collector.collect(new Tuple2<String, Integer>(word, 1));
+                        }
+                    }
+                }).groupBy(0).sum(1);
 
         counts.print();
     }

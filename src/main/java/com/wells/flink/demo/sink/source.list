@@ -1,0 +1,2 @@
+Flink提供了:
+    kafka、redis、es、JDBC等的实时API的sink
