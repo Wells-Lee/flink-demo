@@ -1,4 +1,4 @@
-package com.wells.flink.demo.source;
+package com.wells.flink.demo.api.source;
 
 import com.wells.flink.demo.entity.Person;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;

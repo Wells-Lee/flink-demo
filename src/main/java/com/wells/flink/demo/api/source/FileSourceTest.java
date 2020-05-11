@@ -1,10 +1,10 @@
-package com.wells.flink.demo.source;
+package com.wells.flink.demo.api.source;
 
-        import org.apache.flink.api.java.io.TextInputFormat;
-        import org.apache.flink.core.fs.Path;
-        import org.apache.flink.streaming.api.datastream.DataStreamSource;
-        import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-        import org.apache.flink.streaming.api.functions.source.FileProcessingMode;
+import org.apache.flink.api.java.io.TextInputFormat;
+import org.apache.flink.core.fs.Path;
+import org.apache.flink.streaming.api.datastream.DataStreamSource;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.source.FileProcessingMode;
 
 /**
  * Description 可以检测文件内容变化和文件新增, 需要注意: FileProcessingMode模式的区别

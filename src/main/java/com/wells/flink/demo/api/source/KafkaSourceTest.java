@@ -1,4 +1,4 @@
-package com.wells.flink.demo.source;
+package com.wells.flink.demo.api.source;
 
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -24,7 +24,8 @@ public class KafkaSourceTest {
         DataStream<String> stream = env
                 .addSource(new FlinkKafkaConsumer011<String>("flink-demo-topic", new SimpleStringSchema(), properties));
 
-        stream.print();
+        // 如果不设置分区，那么分区输出的个数等于上一个算子的分区数
+        stream.print().setParallelism(1);
         env.execute();
     }
 }
