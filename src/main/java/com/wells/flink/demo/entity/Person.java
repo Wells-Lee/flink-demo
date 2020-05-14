@@ -10,6 +10,9 @@ public class Person {
     private int age;
     private String sex;
 
+    public Person() {
+    }
+
     public Person(String name, int age, String sex) {
         this.name = name;
         this.age = age;
@@ -38,5 +41,14 @@ public class Person {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                '}';
     }
 }
