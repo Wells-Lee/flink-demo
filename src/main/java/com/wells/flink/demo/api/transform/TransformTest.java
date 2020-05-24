@@ -5,13 +5,16 @@ import org.apache.flink.api.common.functions.*;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.streaming.api.collector.selector.OutputSelector;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.datastream.SplitStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,10 +32,74 @@ public class TransformTest {
 //        transformTest.keyBy(env);
 //        transformTest.reduce(env);
 //        transformTest.fold(env);
-        transformTest.aggregations(env);
+//        transformTest.aggregations(env);
+//        transformTest.splitAndSelect(env);
+        transformTest.project(env);
 
 
         env.execute();
+    }
+
+    /**
+     * @desc Project 函数允许您从事件流中选择属性子集，并仅将所选元素发送到下一个处理流。
+     *
+     * 注意：
+     * 1、只有 tuple DataStreams 可以被投射
+     *
+     * @method project
+     * @param env
+     * @return void
+     * @date 2020-05-14 22:26:17
+     * @author wells
+     */
+    private void project(StreamExecutionEnvironment env) {
+        DataStreamSource<String> source = env.readTextFile("/Users/wells/Projects/04-GitHub/java/flink-demo/src/main/resources/wordCountFile.txt");
+        source.flatMap(new FlatMapFunction<String, Tuple2<String, Integer>>() {
+            @Override
+            public void flatMap(String line, Collector<Tuple2<String, Integer>> collector) throws Exception {
+                String[] words = line.split(" ");
+                for (String word : words) {
+                    collector.collect(new Tuple2<>(word, 1));
+                }
+            }
+        }).project(0).print();  // 仅仅打印出 tuple.f0 构成的流
+    }
+
+    /**
+     * @desc 此功能根据条件将流拆分为两个或多个流。 当您获得混合流并且您可能希望单独处理每个数据流时，可以使用此方法
+     *
+     * 注意：
+     * 1、一般 split 与 select 配合使用
+     *
+     * @method splitAndSelect
+     * @param env
+     * @return void
+     * @date 2020-05-14 22:22:41
+     * @author wells
+     */
+    private void splitAndSelect(StreamExecutionEnvironment env) {
+        DataStreamSource<String> source = env.readTextFile("/Users/wells/Projects/04-GitHub/java/flink-demo/src/main/resources/wordCountFile.txt");
+        SplitStream<String> split = source.split(new OutputSelector<String>() {
+            @Override
+            public Iterable<String> select(String value) {
+                List<String> list = new LinkedList<>();
+
+                if (value.toLowerCase().contains("hello")) {
+                    list.add("hello");
+                } else {
+                    list.add("cry");
+                }
+
+                return list;
+            }
+        });
+
+        // 输出 hello 所在行的字符串
+//        split.select("hello").print();
+        // 输出 cry 所在行的字符串
+//        split.select("cry").print();
+        // 输出所有
+        split.select("hello", "cry").print();
     }
 
     /**

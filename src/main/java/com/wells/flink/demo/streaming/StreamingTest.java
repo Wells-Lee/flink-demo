@@ -14,13 +14,8 @@ import org.apache.flink.util.Collector;
 
 public class StreamingTest {
     public static void main(String[] args) throws Exception {
-        if (null == args || args.length != 2) {
-            System.out.println("please check param, Usage: host port");
-            return;
-        }
-
-        String host = args[0];
-        int port = Integer.parseInt(args[1]);
+        String host = "localhost";
+        int port = 9999;
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         DataStreamSource<String> source = env.socketTextStream(host, port);
@@ -32,7 +27,9 @@ public class StreamingTest {
                     collector.collect(new Tuple2<String, Integer>(word, 1));
                 }
             }
-        }).keyBy(0).sum(1);
+        })
+                .keyBy(0)
+                .sum(1);
 
         counts.print();
 

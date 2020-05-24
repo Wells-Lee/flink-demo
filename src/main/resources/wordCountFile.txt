@@ -4,3 +4,9 @@ Hello Scala
 Hello Flink
 Hello Spark
 Hello Hadoop
+Cry Java
+Cry C++
+Cry Scala
+Cry Flink
+Cry Spark
+Cry Hadoop
