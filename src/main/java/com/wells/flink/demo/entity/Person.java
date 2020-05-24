@@ -9,6 +9,7 @@ public class Person {
     private String name;
     private int age;
     private String sex;
+    private long timestamp;
 
     public Person() {
     }
@@ -17,6 +18,13 @@ public class Person {
         this.name = name;
         this.age = age;
         this.sex = sex;
+    }
+
+    public Person(String name, int age, String sex, long timestamp) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.timestamp = timestamp;
     }
 
     public String getName() {
@@ -43,12 +51,21 @@ public class Person {
         this.sex = sex;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", sex='" + sex + '\'' +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }
