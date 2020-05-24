@@ -16,7 +16,7 @@ import org.apache.flink.streaming.api.windowing.time.Time;
  * Created by wells on 2020-05-24 15:12:52
  */
 
-public class WatermarksTest {
+public class WatermarkTest {
     public static void main(String[] args) throws Exception {
         String host = "localhost";
         int port = 9999;

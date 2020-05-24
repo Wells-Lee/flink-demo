@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
  * Created by wells on 2020-05-24 15:12:52
  */
 
-public class WatermarksCustomAssignerTest {
+public class WatermarkCustomAssignerTest {
     public static void main(String[] args) throws Exception {
         String host = "localhost";
         int port = 9999;
