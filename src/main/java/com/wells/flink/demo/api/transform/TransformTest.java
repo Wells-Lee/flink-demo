@@ -116,11 +116,11 @@ public class TransformTest {
      */
     private void aggregations(StreamExecutionEnvironment env) {
         List<Person> personList = new ArrayList<Person>();
-        personList.add(new Person("Allen", 18, "male"));
-        personList.add(new Person("Tom", 23, "female"));
-        personList.add(new Person("Jerry", 10, "male"));
-        personList.add(new Person("Tom", 45, "male"));
-        personList.add(new Person("Tom", 33, "male"));
+        personList.add(new Person("Allen", 18, "male", 1L));
+        personList.add(new Person("Tom", 23, "female", 2L));
+        personList.add(new Person("Jerry", 10, "male", 3L));
+        personList.add(new Person("Tom", 45, "male", 4L));
+        personList.add(new Person("Tom", 33, "male", 5L));
 
         DataStreamSource<Person> personDataStreamSource = env.fromCollection(personList);
 

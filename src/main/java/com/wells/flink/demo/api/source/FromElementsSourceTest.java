@@ -14,8 +14,8 @@ public class FromElementsSourceTest {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStreamSource<Person> personDataStreamSource = env.fromElements(
-                new Person("tom", 23, "man"),
-                new Person("jerry", 2, "woman")
+                new Person("tom", 23, "man", 1L),
+                new Person("jerry", 2, "woman", 2L)
         );
 
         personDataStreamSource.print();
